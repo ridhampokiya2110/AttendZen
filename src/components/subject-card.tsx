@@ -37,12 +37,12 @@ export default function SubjectCard({ subject, updateSubject, deleteSubject }: S
   }
 
   return (
-    <Card className="flex flex-col transition-all hover:shadow-lg hover:shadow-primary/10">
-      <CardHeader>
+    <Card className="flex flex-col transition-all hover:shadow-lg hover:shadow-primary/10 border-secondary/20">
+      <CardHeader className="bg-secondary/5">
         <div className="flex justify-between items-start">
             <div>
-                <CardTitle className="font-headline">{subject.name}</CardTitle>
-                <CardDescription>Target: {subject.target}%</CardDescription>
+                <CardTitle className="font-headline text-lg text-foreground font-semibold">{subject.name}</CardTitle>
+                <CardDescription className="text-muted-foreground">Target: {subject.target}%</CardDescription>
             </div>
              <AlertDialog>
               <AlertDialogTrigger asChild>
@@ -76,11 +76,11 @@ export default function SubjectCard({ subject, updateSubject, deleteSubject }: S
         </p>
       </CardContent>
       <CardFooter className="flex justify-stretch space-x-2">
-        <Button variant="outline" className="w-full" onClick={handlePresent}>
-            <ArrowUp className="h-4 w-4 mr-2" /> Present
+        <Button variant="success" className="w-full" onClick={handlePresent}>
+            <ArrowUp className="h-4 w-4" /> Present
         </Button>
-        <Button variant="outline" className="w-full" onClick={handleAbsent}>
-            <ArrowDown className="h-4 w-4 mr-2" /> Absent
+        <Button variant="danger" className="w-full" onClick={handleAbsent}>
+            <ArrowDown className="h-4 w-4" /> Absent
         </Button>
       </CardFooter>
     </Card>
