@@ -9,11 +9,7 @@ const nextConfig = {
   },
   eslint: {
     ignoreDuringBuilds: true,
-  },
-  swcMinify: true,
-  compiler: {
-    styledComponents: true,
-  },
+  }
 };
 
 module.exports = nextConfig;
