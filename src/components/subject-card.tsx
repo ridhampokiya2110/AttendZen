@@ -10,28 +10,33 @@ import { useToast } from '@/hooks/use-toast';
 
 interface SubjectCardProps {
   subject: Subject;
-  updateSubject: (id: string, newValues: Partial<Omit<Subject, 'id'>>) => void;
-  deleteSubject: (id: string) => void;
+  onUpdate: (id: string, newValues: Partial<Omit<Subject, 'id'>>) => void;
+  onDelete: (id: string) => void;
 }
 
-export default function SubjectCard({ subject, updateSubject, deleteSubject }: SubjectCardProps) {
+export default function SubjectCard({ subject, onUpdate, onDelete }: SubjectCardProps) {
   const { toast } = useToast();
-  const attendancePercentage = subject.total > 0 ? Math.round((subject.attended / subject.total) * 100) : 0;
-  const isBelowTarget = attendancePercentage < subject.target && subject.total > 0;
+  const attendanceRate = subject.total > 0 ? Math.round((subject.attended / subject.total) * 100) : 0;
+  const isAttendanceBelowTarget = attendanceRate < subject.target && subject.total > 0;
 
-  const handlePresent = () => {
-    updateSubject(subject.id, { attended: subject.attended + 1, total: subject.total + 1 });
+  const markPresent = () => {
+    onUpdate(subject.id, { 
+      attended: subject.attended + 1, 
+      total: subject.total + 1 
+    });
   };
 
-  const handleAbsent = () => {
-    updateSubject(subject.id, { total: subject.total + 1 });
+  const markAbsent = () => {
+    onUpdate(subject.id, { 
+      total: subject.total + 1 
+    });
   };
 
-  const handleDelete = () => {
-    deleteSubject(subject.id);
+  const handleDeleteClick = () => {
+    onDelete(subject.id);
     toast({
-      title: "Subject Deleted",
-      description: `"${subject.name}" has been removed.`,
+      title: "Subject Removed",
+      description: `${subject.name} has been removed from your list.`,
       variant: 'destructive',
     })
   }
@@ -59,7 +64,7 @@ export default function SubjectCard({ subject, updateSubject, deleteSubject }: S
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">Delete</AlertDialogAction>
+                  <AlertDialogAction onClick={handleDeleteClick} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">Delete</AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
@@ -67,20 +72,23 @@ export default function SubjectCard({ subject, updateSubject, deleteSubject }: S
       </CardHeader>
       <CardContent className="flex-grow">
         <div className="text-center mb-4">
-          <span className="text-4xl font-bold">{attendancePercentage}</span>
+          <span className="text-4xl font-bold">{attendanceRate}</span>
           <span className="text-xl text-muted-foreground">%</span>
         </div>
-        <Progress value={attendancePercentage} className={isBelowTarget ? '[&>div]:bg-destructive' : ''} />
+        <Progress 
+          value={attendanceRate} 
+          className={isAttendanceBelowTarget ? '[&>div]:bg-destructive' : '[&>div]:bg-emerald-500'} 
+        />
         <p className="text-center text-sm text-muted-foreground mt-2">
-          {subject.attended} / {subject.total} classes attended
+          {subject.attended} of {subject.total} classes attended
         </p>
       </CardContent>
       <CardFooter className="flex justify-stretch space-x-2">
-        <Button variant="success" className="w-full" onClick={handlePresent}>
-            <ArrowUp className="h-4 w-4" /> Present
+        <Button variant="success" className="w-full group" onClick={markPresent}>
+            <ArrowUp className="h-4 w-4 group-hover:scale-110 transition-transform" /> Present
         </Button>
-        <Button variant="danger" className="w-full" onClick={handleAbsent}>
-            <ArrowDown className="h-4 w-4" /> Absent
+        <Button variant="danger" className="w-full group" onClick={markAbsent}>
+            <ArrowDown className="h-4 w-4 group-hover:scale-110 transition-transform" /> Absent
         </Button>
       </CardFooter>
     </Card>
