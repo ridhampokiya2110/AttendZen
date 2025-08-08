@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  reactStrictMode: true,
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ['@radix-ui/react-alert-dialog', '@radix-ui/react-dialog', 'lucide-react'],
+  },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
 };
 
 export default nextConfig;
