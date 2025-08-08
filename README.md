@@ -32,7 +32,7 @@ AttendZen is a modern, user-friendly attendance management system built with Nex
    ```bash
    npm run dev
    ```
-4. Open [http://localhost:9002](http://localhost:9002) in your browser
+4. Open https://attendzen.netlify.app/ in your browser
 
 ## Usage
 
