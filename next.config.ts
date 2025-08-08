@@ -1,8 +1,9 @@
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
-  output: 'export',  // Enable static exports
-  distDir: '.next',
+  output: 'export',
+  distDir: 'out',
+  trailingSlash: true,
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -10,7 +11,7 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    unoptimized: true,  // Required for static export
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
