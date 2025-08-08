@@ -75,7 +75,7 @@ export function AddSubjectDialog({ addSubject }: AddSubjectDialogProps) {
                 <FormItem>
                   <FormLabel>Subject Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. Advanced AI" {...field} />
+                    <Input placeholder="e.g. Mathematics" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
