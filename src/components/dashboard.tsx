@@ -10,9 +10,11 @@ import Header from '@/components/header';
 import SubjectCard from '@/components/subject-card';
 import AttendanceCharts from '@/components/attendance-charts';
 import AITipsCard from '@/components/ai-tips-card';
+import { useAuth } from '@/hooks/use-auth';
 
 export default function Dashboard() {
-  const { subjects, loading, addSubject, updateSubject, deleteSubject } = useSubjects();
+  const { user } = useAuth();
+  const { subjects, loading, addSubject, updateSubject, deleteSubject } = useSubjects(user?.email);
 
   const overallAttendance = React.useMemo(() => {
     const totalAttended = subjects.reduce((acc, s) => acc + s.attended, 0);

@@ -6,17 +6,29 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { Subject } from '@/types';
 import { AddSubjectDialog } from './add-subject-dialog';
-import { Target } from 'lucide-react';
+import { Target, LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Skeleton } from './ui/skeleton';
+import { useAuth } from '@/hooks/use-auth';
+import { Button } from './ui/button';
+import { useRouter } from 'next/navigation';
 
 interface HeaderProps {
   addSubject?: (subject: Omit<Subject, 'id' | 'attended' | 'total'>) => void;
   loading?: boolean;
 }
 
-export default function Header({ addSubject, loading }: HeaderProps) {
+export default function Header({ addSubject, loading: propLoading }: HeaderProps) {
   const pathname = usePathname();
+  const { user, logout, loading: authLoading } = useAuth();
+  const router = useRouter();
+  
+  const loading = propLoading || authLoading;
+
+  const handleLogout = async () => {
+    await logout();
+    router.push('/login');
+  };
 
   if (loading) {
     return (
@@ -49,14 +61,20 @@ export default function Header({ addSubject, loading }: HeaderProps) {
         </div>
         <nav className="flex items-center gap-4 text-sm lg:gap-6">
           <Link href="/" className={cn("transition-colors hover:text-foreground/80 font-medium", pathname === "/" ? "text-foreground" : "text-foreground/60")}>
-            Dashboard
-          </Link>
-          <Link href="/calculator" className={cn("transition-colors hover:text-foreground/80 font-medium", pathname === "/calculator" ? "text-foreground" : "text-foreground/60")}>
             Calculator
+          </Link>
+          <Link href="/dashboard" className={cn("transition-colors hover:text-foreground/80 font-medium", pathname === "/dashboard" ? "text-foreground" : "text-foreground/60")}>
+            Dashboard
           </Link>
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-4">
-          {addSubject && <AddSubjectDialog addSubject={addSubject} />}
+          {pathname === '/dashboard' && addSubject && <AddSubjectDialog addSubject={addSubject} />}
+           {user && (
+            <Button variant="ghost" size="sm" onClick={handleLogout}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Logout
+            </Button>
+          )}
         </div>
       </div>
     </header>
