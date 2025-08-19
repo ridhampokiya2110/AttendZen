@@ -9,6 +9,7 @@
 - AI Attendance Tips: Provide AI-generated tips based on the user's data about actions the user could take to maintain a target attendance goal. Use a tool to decide if tips are actually necessary or useful before including them.
 - Fluid Animations: Implement fluid animations to enhance user experience and engagement.
 - Attendance Reminders: Integrate reminders.
+- Attendance Calculator: Calculator off attandence so student can easily calculate their attandence
 
 ## Style Guidelines:
 

@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from 'react';
@@ -84,21 +85,14 @@ export default function Dashboard() {
 function DashboardSkeleton() {
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 items-center">
-            <Skeleton className="h-8 w-24" />
-            <div className="flex flex-1 items-center justify-end space-x-4">
-                <Skeleton className="h-9 w-32" />
-            </div>
-        </div>
-      </header>
+      <Header loading addSubject={() => {}} />
       <main className="flex-1 p-4 sm:p-6 md:p-8 space-y-8">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <Skeleton className="h-28" />
           <Skeleton className="h-28" />
           <Skeleton className="h-28" />
         </div>
-        <Skeleton className="h-80" />
+        <Skeleton className="h-[438px]" />
         <div>
           <Skeleton className="h-9 w-48 mb-6" />
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
